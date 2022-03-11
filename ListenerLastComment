@@ -1,0 +1,27 @@
+import com.atlassian.jira.component.ComponentAccessor
+import com.atlassian.jira.issue.ModifiedValue
+import com.atlassian.jira.issue.util.DefaultIssueChangeHolder
+import com.atlassian.jira.component.ComponentAccessor
+
+def issue = event.issue
+
+// the name of the custom field to update
+final customFieldName = 'Last-Comment'
+
+def commentManager = ComponentAccessor.commentManager
+def comment = commentManager.getLastComment(issue)
+def customFieldManager = ComponentAccessor.customFieldManager
+def customField = customFieldManager.getCustomFieldObjects(issue).findByName(customFieldName)
+assert customField : "Could not find custom field with name $customFieldName"
+
+
+if (comment) {
+ 
+// the new value of the field
+final newValue = comment.body
+log.warn " comment " + newValue 
+    
+customField.updateValue(null, issue, new ModifiedValue(issue.getCustomFieldValue(customField), newValue), new DefaultIssueChangeHolder())
+
+
+}
