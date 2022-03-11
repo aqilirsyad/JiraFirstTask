@@ -1,0 +1,13 @@
+import com.atlassian.jira.component.ComponentAccessor
+import com.atlassian.jira.util.BuildUtilsInfo
+
+
+def issueManager = ComponentAccessor.issueManager
+
+def subTasks = issue.getSubTaskObjects()
+def subTaskSum = 0
+issue.getSubTaskObjects()?.each {
+    subTaskSum += 1
+}
+
+return subTaskSum
