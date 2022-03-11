@@ -1,0 +1,27 @@
+import com.atlassian.jira.issue.IssueManager
+import com.atlassian.jira.issue.MutableIssue
+import com.atlassian.jira.component.ComponentAccessor
+import com.atlassian.jira.issue.util.DefaultIssueChangeHolder
+import com.atlassian.jira.issue.ModifiedValue
+
+IssueManager im = ComponentAccessor.getIssueManager()
+MutableIssue issue = im.getIssueObject("FT-24")
+
+if(issue){
+  //get the value
+  def customFieldManager = ComponentAccessor.getCustomFieldManager()
+  def cField1 = customFieldManager.getCustomFieldObject("customfield_10114")
+  def cField2 = customFieldManager.getCustomFieldObject("customfield_10113")
+  def cFieldValue1 = issue.getCustomFieldValue(cField1)
+  def cFieldValue2 = issue.getCustomFieldValue(cField2)
+  def output = cFieldValue1 + cFieldValue2
+
+  return output
+  
+
+
+}else {
+
+  return "Issue doesn't exist"
+  
+}
